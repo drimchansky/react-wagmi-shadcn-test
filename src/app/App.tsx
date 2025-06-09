@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import { MainLayout } from '@/app/layouts/MainLayout'
+import { Account } from '@/pages/Account'
 import { Home } from '@/pages/Home'
 
 export const App = () => (
@@ -8,6 +9,7 @@ export const App = () => (
     <Routes>
       <Route element={<MainLayout />} path="/">
         <Route element={<Home />} index />
+        <Route element={<Account />} path="/account" />
       </Route>
     </Routes>
   </BrowserRouter>
