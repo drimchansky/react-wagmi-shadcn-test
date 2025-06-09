@@ -1,0 +1,19 @@
+@utility text-heading-1 {
+  @apply text-3xl !leading-tight font-semibold text-gray-800 sm:text-4xl;
+}
+
+@utility text-heading-2 {
+  @apply text-xl !leading-tight font-semibold text-gray-800 sm:text-2xl;
+}
+
+@utility text-medium-normal {
+  @apply text-base !leading-tight font-normal text-gray-800 sm:text-lg;
+}
+
+@utility text-medium-bold {
+  @apply text-base !leading-tight font-bold text-gray-800 sm:text-lg;
+}
+
+@utility text-medium-semibold {
+  @apply text-base !leading-tight font-semibold text-gray-800 sm:text-lg;
+}
