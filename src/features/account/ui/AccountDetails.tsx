@@ -1,4 +1,4 @@
-import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi'
+import { useAccount, useDisconnect, useEnsName } from 'wagmi'
 
 import { Button } from '@/shared/ui/Button'
 
