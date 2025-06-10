@@ -4,9 +4,9 @@ import { useConnect } from 'wagmi'
 import { Badge } from '@/shared/ui/Badge'
 import { Button } from '@/shared/ui/Button'
 
-import { isMetaMaskInstalled } from '../lib/isMetaMaskInstalled'
+import { isMetaMaskInstalled } from '../../shared/functions/isMetaMaskInstalled'
 
-export const WalletSelector = () => {
+export const ConnectWallet = () => {
   const { connectors, connect, status, error: wagmiError } = useConnect()
   const [warning, setWarning] = useState<string | null>(null)
 
@@ -41,7 +41,6 @@ export const WalletSelector = () => {
         {connectors.map(connector => (
           <Button
             variant="primary"
-            type="button"
             key={connector.uid}
             onClick={() => handleConnect(connector)}
             disabled={status === 'pending'}

@@ -1,1 +1,1 @@
-export { WalletSelector } from './ui/WalletSelector'
+export { ConnectWallet } from './ConnectWallet'
