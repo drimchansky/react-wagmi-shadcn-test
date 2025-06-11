@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom'
 import { useAccount } from 'wagmi'
 
-import { WalletDetails } from '@/entities/wallet'
-import { SendTransaction } from '@/features/send-transaction'
+import { WagmiTestContract } from '@/features/read-contract/contracts/WagmiTestContract'
 import { Container } from '@/shared/ui/Container'
 
-export const Send = () => {
+export const ReadContract = () => {
   const { isConnected } = useAccount()
 
   return (
@@ -13,17 +12,12 @@ export const Send = () => {
       <main>
         <Container className="grid min-h-screen grid-rows-[min-content_1fr] content-center items-center">
           <div>
-            <h1 className="text-heading-1">Send page</h1>
-
+            <h1 className="text-heading-1">Read contract page</h1>
             <Link to="/account" className="underline">
               Back to Account
             </Link>
           </div>
-
-          <div className="w-full justify-self-center">
-            <WalletDetails />
-            <SendTransaction className="mt-3" />
-          </div>
+          <WagmiTestContract />
         </Container>
       </main>
     )

@@ -1,20 +1,7 @@
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useAccount } from 'wagmi'
-
 import { ConnectWallet } from '@/features/connect-wallet'
 import { Container } from '@/shared/ui/Container'
 
 export const Home = () => {
-  const { isConnected } = useAccount()
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (isConnected) {
-      navigate('/account')
-    }
-  }, [isConnected])
-
   return (
     <main>
       <Container className="grid min-h-screen grid-rows-[min-content_1fr] items-center">

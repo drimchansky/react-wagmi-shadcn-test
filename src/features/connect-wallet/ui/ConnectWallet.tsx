@@ -3,7 +3,7 @@ import { useConnect } from 'wagmi'
 import { Badge } from '@/shared/ui/Badge'
 import { Button } from '@/shared/ui/Button'
 
-import { isConnectorAvailable } from './lib/isConnectorAvailable'
+import { isConnectorAvailable } from '../lib/isConnectorAvailable'
 
 export const ConnectWallet = () => {
   const { connectors, connect, status, error: wagmiError } = useConnect()

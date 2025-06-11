@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useAccount } from 'wagmi'
 
 import { WalletDetails } from '@/entities/wallet'
@@ -9,13 +7,6 @@ import { Container } from '@/shared/ui/Container'
 
 export const Account = () => {
   const { isConnected } = useAccount()
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (!isConnected) {
-      navigate('/')
-    }
-  }, [isConnected])
 
   return (
     isConnected && (
@@ -30,6 +21,10 @@ export const Account = () => {
               <div className="grid w-full gap-3 sm:flex sm:justify-start">
                 <Button variant="primary" href="/send">
                   Send money
+                </Button>
+
+                <Button variant="primary" href="/read-contract">
+                  Read contract
                 </Button>
 
                 <DisconnectWallet />
