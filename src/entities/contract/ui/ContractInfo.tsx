@@ -1,5 +1,8 @@
-import { HTMLAttributes } from 'react'
+import { HTMLAttributes, useEffect } from 'react'
+import { toast } from 'sonner'
 import { type BaseError, useReadContracts } from 'wagmi'
+
+import { log } from '@/shared/functions/log'
 
 type ContractCall = {
   functionName: string
@@ -24,17 +27,31 @@ export const ContractInfo = ({ contractConfig, calls, ...args }: ContractInfoPro
     }))
   })
 
+  useEffect(() => {
+    if (error) {
+      log(error)
+      toast((error as BaseError).shortMessage || error.message)
+    }
+
+    if (!isPending && data?.some(e => e.status === 'failure')) {
+      log(data)
+      data.forEach(e => {
+        e.status === 'failure' && toast('The contract function returned no data')
+      })
+    }
+  }, [error, isPending])
+
   if (isPending) return <div>Loading...</div>
 
-  if (error) return <div>Error: {(error as BaseError).shortMessage || error.message}</div>
-
   return (
-    <div {...args}>
-      {data?.map((result, index) => (
-        <div key={calls[index].functionName}>
-          {calls[index].label || calls[index].functionName}: {result?.result?.toString()}
-        </div>
-      ))}
-    </div>
+    data && (
+      <div {...args}>
+        {data?.map((result, index) => (
+          <div key={calls[index].functionName}>
+            {calls[index].label || calls[index].functionName}: {result?.result?.toString()}
+          </div>
+        ))}
+      </div>
+    )
   )
 }

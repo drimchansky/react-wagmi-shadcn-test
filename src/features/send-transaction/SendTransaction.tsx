@@ -1,8 +1,12 @@
+import { useEffect } from 'react'
 import * as React from 'react'
+import { toast } from 'sonner'
 import { parseEther } from 'viem'
 import { type BaseError, useSendTransaction, useWaitForTransactionReceipt } from 'wagmi'
 
+import { log } from '@/shared/functions/log'
 import { Button } from '@/shared/ui/Button'
+import { Input } from '@/shared/ui/input'
 
 type Props = React.HTMLAttributes<HTMLFormElement>
 
@@ -12,6 +16,13 @@ export const SendTransaction = ({ ...props }: Props) => {
     hash
   })
   const isDisabled = isPending || isConfirming
+
+  useEffect(() => {
+    if (error) {
+      log(error)
+      toast((error as BaseError).shortMessage || error.message)
+    }
+  }, [error])
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -32,26 +43,11 @@ export const SendTransaction = ({ ...props }: Props) => {
       {...props}
     >
       <div className="flex flex-col gap-2">
-        <input
-          disabled={isDisabled}
-          type="text"
-          name="address"
-          autoComplete="off"
-          placeholder="0xA0Cf…251e"
-          required
-          className="rounded-md border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-500 focus:outline-none"
-        />
-        <input
-          disabled={isDisabled}
-          name="value"
-          autoComplete="off"
-          placeholder="0.05"
-          required
-          className="rounded-md border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-500 focus:outline-none"
-        />
+        <Input disabled={isDisabled} type="text" name="address" autoComplete="off" required placeholder="0xA0Cf…251e" />
+        <Input disabled={isDisabled} name="value" autoComplete="off" placeholder="0.05" />
       </div>
 
-      <Button variant="primary" disabled={isDisabled} type="submit" className="mt-3 w-full!">
+      <Button disabled={isDisabled} type="submit" className="mt-3 w-full!">
         {isPending ? 'Confirming...' : 'Send'}
       </Button>
 
@@ -65,12 +61,6 @@ export const SendTransaction = ({ ...props }: Props) => {
         {isConfirming && <div className="rounded-md bg-blue-50 p-2 text-blue-700">Waiting for confirmation...</div>}
 
         {isConfirmed && <div className="rounded-md bg-green-50 p-2 text-green-700">Transaction confirmed.</div>}
-
-        {error && (
-          <div className="rounded-md bg-red-50 p-2 text-red-700">
-            Error: {(error as BaseError).shortMessage || error.message}
-          </div>
-        )}
       </div>
     </form>
   )

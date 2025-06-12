@@ -1,7 +1,11 @@
+import { useEffect } from 'react'
+import { toast } from 'sonner'
 import { useConnect } from 'wagmi'
 
-import { Badge } from '@/shared/ui/Badge'
+import { log } from '@/shared/functions/log'
 import { Button } from '@/shared/ui/Button'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/shared/ui/Card'
+import { TypographyH2, TypographyP } from '@/shared/ui/typography'
 
 import { isConnectorAvailable } from '../lib/isConnectorAvailable'
 
@@ -12,36 +16,43 @@ export const ConnectWallet = () => {
     try {
       connect({ connector })
     } catch (err) {
-      console.error('Connection failed:', err)
+      log(err)
+      toast('Someting went wrong, please try again')
     }
   }
 
+  useEffect(() => {
+    if (wagmiError) {
+      log(wagmiError)
+      toast('Someting went wrong, please try again')
+    }
+  }, [wagmiError])
+
   return (
-    <div className="grid gap-3 text-center">
-      <h2 className="text-heading-2">Connect Your Wallet</h2>
+    <Card>
+      <CardHeader>
+        <CardTitle>
+          <TypographyH2>Connect Your Wallet</TypographyH2>
+        </CardTitle>
+      </CardHeader>
 
-      {status === 'pending' && <Badge text="Connecting..." color="grey" />}
+      <CardContent>
+        <TypographyP>You can choose between WalletConnect and MetaMask (browser extention required)</TypographyP>
+      </CardContent>
 
-      {wagmiError && (
-        <Badge text={`Connection Error. Full message:\n ${JSON.stringify(wagmiError, null, 2)}`} color="red" />
-      )}
-
-      <div className="flex flex-col justify-center gap-3">
-        {connectors.map(
-          connector =>
-            isConnectorAvailable(connector) && (
-              <Button
-                variant="primary"
-                key={connector.uid}
-                onClick={() => handleConnect(connector)}
-                disabled={status === 'pending'}
-              >
-                {connector.name}
-                {status === 'pending' ? ' Connecting...' : ''}
-              </Button>
-            )
-        )}
-      </div>
-    </div>
+      <CardFooter className="justify-center">
+        <div className="flex justify-center gap-3">
+          {connectors.map(
+            connector =>
+              isConnectorAvailable(connector) && (
+                <Button key={connector.uid} onClick={() => handleConnect(connector)} disabled={status === 'pending'}>
+                  {connector.name}
+                  {status === 'pending' ? ' Connecting...' : ''}
+                </Button>
+              )
+          )}
+        </div>
+      </CardFooter>
+    </Card>
   )
 }

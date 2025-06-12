@@ -6,7 +6,7 @@ export const DisconnectWallet = () => {
   const { disconnect } = useDisconnect()
 
   return (
-    <Button variant="danger" onClick={() => disconnect()}>
+    <Button variant="destructive" onClick={() => disconnect()}>
       Disconnect
     </Button>
   )

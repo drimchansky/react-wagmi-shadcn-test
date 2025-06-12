@@ -3,7 +3,16 @@ import { useAccount } from 'wagmi'
 
 import { WalletDetails } from '@/entities/wallet'
 import { SendTransaction } from '@/features/send-transaction'
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator
+} from '@/shared/ui/Breadcrumb'
 import { Container } from '@/shared/ui/Container'
+import { TypographyH1 } from '@/shared/ui/typography'
 
 export const Send = () => {
   const { isConnected } = useAccount()
@@ -13,11 +22,23 @@ export const Send = () => {
       <main>
         <Container className="grid min-h-screen grid-rows-[min-content_1fr] content-center items-center">
           <div>
-            <h1 className="text-heading-1">Send page</h1>
+            <TypographyH1>Send page</TypographyH1>
 
-            <Link to="/account" className="underline">
-              Back to Account
-            </Link>
+            <Breadcrumb className="mt-3">
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link to="/account">Account</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+
+                <BreadcrumbSeparator />
+
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Send</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
           </div>
 
           <div className="w-full justify-self-center">

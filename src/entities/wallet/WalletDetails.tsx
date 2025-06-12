@@ -1,8 +1,11 @@
+import { useEffect } from 'react'
+import { toast } from 'sonner'
 import { useAccount, useBalance, useChainId } from 'wagmi'
 
 import { formatEthBalance } from '@/shared/functions/formatEthBalance'
 import { formatUsdValue } from '@/shared/functions/formatUsdValue'
 import { getNetworkName } from '@/shared/functions/getNetworkName'
+import { log } from '@/shared/functions/log'
 import { useEthPrice } from '@/shared/hooks/useEthPrice'
 
 export const WalletDetails = () => {
@@ -11,9 +14,17 @@ export const WalletDetails = () => {
   const { data: balance } = useBalance({
     address
   })
-  const ethPrice = useEthPrice()
+  const { price, error } = useEthPrice()
 
-  const usdValue = balance && ethPrice ? Number(balance.formatted) * ethPrice : null
+  const ethBalance = formatEthBalance(balance?.value, balance?.decimals)
+  const usdValue = ethBalance && price ? Number(ethBalance) * price : null
+
+  useEffect(() => {
+    if (error) {
+      log(error)
+      toast('Unable to get balance in USD, please try later')
+    }
+  }, [error])
 
   return (
     <div className="text-medium-normal grid w-full gap-4 text-wrap">
@@ -27,11 +38,11 @@ export const WalletDetails = () => {
         <span className="font-mono break-all">
           {balance ? (
             <>
-              {formatEthBalance(balance.value, balance.decimals)} {balance.symbol}
+              {ethBalance} {balance.symbol}
               {usdValue && <span className="ml-2 text-gray-600">{formatUsdValue(usdValue)}</span>}
             </>
           ) : (
-            'Loading...'
+            'Loading price...'
           )}
         </span>
       </div>

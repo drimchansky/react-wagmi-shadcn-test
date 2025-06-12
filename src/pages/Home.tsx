@@ -1,15 +1,13 @@
 import { ConnectWallet } from '@/features/connect-wallet'
 import { Container } from '@/shared/ui/Container'
+import { TypographyH1 } from '@/shared/ui/typography'
 
 export const Home = () => {
   return (
     <main>
       <Container className="grid min-h-screen grid-rows-[min-content_1fr] items-center">
-        <h1 className="text-heading-1">Home page</h1>
-
-        <div className="justify-self-center">
-          <ConnectWallet />
-        </div>
+        <TypographyH1>Home page</TypographyH1>
+        <ConnectWallet />
       </Container>
     </main>
   )

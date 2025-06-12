@@ -2,6 +2,7 @@ import { useAccount } from 'wagmi'
 
 import { ContractInfo } from '@/entities/contract'
 import { wagmiContractConfig } from '@/entities/contract/configs/wagmi'
+import { TypographyH2 } from '@/shared/ui/typography'
 
 export const WagmiTestContract = () => {
   const { address } = useAccount()
@@ -10,7 +11,7 @@ export const WagmiTestContract = () => {
 
   return (
     <div>
-      <h2 className="text-heading-2">Wagmi Test Contract Info</h2>
+      <TypographyH2>Wagmi Test Contract Info</TypographyH2>
 
       <ContractInfo
         contractConfig={wagmiContractConfig}
