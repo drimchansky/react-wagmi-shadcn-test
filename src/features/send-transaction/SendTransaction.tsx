@@ -6,7 +6,7 @@ import { type BaseError, useSendTransaction, useWaitForTransactionReceipt } from
 
 import { log } from '@/shared/functions/log'
 import { Button } from '@/shared/ui/Button'
-import { Input } from '@/shared/ui/input'
+import { Input } from '@/shared/ui/Input'
 
 type Props = React.HTMLAttributes<HTMLFormElement>
 
